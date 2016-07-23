@@ -1,0 +1,80 @@
+@import "basic";
+@padding:15px;
+@cols:12;
+@small:750px;
+@middle:975px;
+@large:1180px;
+.container {
+  & {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding-left: @padding;
+    padding-right: @padding;
+  }
+  &-fluid {
+    width: 100%;
+    height: auto;
+    padding-left: @padding;
+    padding-right: @padding;
+  }
+  & > .row, &-fluid > .row {
+    padding-left: @padding;
+    padding-right: @padding;
+  }
+  &:after,&-fluid:after{
+    content:"";
+    display: block;
+    width:100%;
+  }
+}
+
+.response (@i:1,@type:xs) when (@i<=@cols){
+  .col-@{type}-@{i}{
+    width:@i/@cols*100%;
+    float: left;
+    padding-left: @padding;
+    padding-right:@padding;
+    position: relative;
+    min-height: 1px;
+  }
+  .response(@i+1,@type);
+
+}
+.response();
+.position (@i:0,@type:xs) when(@i<=@cols){
+  .col-@{type}-push-@{i}{
+    left:@i/@cols*100%;
+  }
+  .col-@{type}-pull-@{i}{
+    right:@i/@cols*100%;
+  }
+  .col-@{type}-offset-@{i}{
+    margin-left:@i/@cols*100;
+  }
+  .position(@i+1,@type);
+}
+.position();
+@media screen and (min-width:@small){
+  .container{
+    width: 750px;
+  }
+  .response(@i:1,@type:sm);
+  .position(@i:0,@type:sm);
+
+}
+@media screen and (min-width:@middle){
+  .container{
+    width:975px;
+  }
+  .response(@i:1,@type:md);
+  .position(@i:0,@type:md);
+
+}
+@media screen and (min-width:@large){
+  .container{
+    width: 1180px;
+  }
+  .response(@i:1,@type:lg);
+  .position(@i:0,@type:lg);
+}
